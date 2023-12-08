@@ -14,7 +14,7 @@ Pig is a simple and entertaining dice game. The rules are easy to learn and the 
 
 ### Try the Game
 
-Experience this game interactively by clicking on [This Link](ramazanima.github.io/pig-game/)
+Experience this game interactively by clicking on [This Link](https://ramazanima.github.io/pig-game/)
 
 ## Note
 
