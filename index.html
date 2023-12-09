@@ -3,12 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="style.css" />
     <title>Pig Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <main>
+      <div class="home-screen">
+        <h2>Settle Your Decisions with Dice</h2>
+        <p>
+          Can't decide where to go for dinner? Stuck between two movies for
+          movie night? Let the dice decide! In our fun and friendly Pig Game,
+          your decisions are just a roll away. Gather your friends, roll the
+          dice, and let the highest score settle the debate. It's simple,
+          exciting, and the perfect way to make decisions while having a blast.
+          Whether it's choosing a destination, picking an activity, or just for
+          a bit of fun, let the winner's choice reign supreme!
+        </p>
+        <label>Player 1 Name: </label>
+        <input type="text" id="player1-name" />
+        <label>Player 2 Name: </label>
+        <input type="text" id="player2-name" />
+        <label for="maxWinningScore">Maximum Winning Score [10-100]</label>
+        <input
+          id="maxWinningScore"
+          ,
+          type="range"
+          value="Enter the maximum winning score"
+          min="10"
+          max="100"
+          step="10"
+        />
+        <p output id="value">Value:</p>
+        <button class="maxWinningScoreTaken">Submit</button>
+      </div>
       <section class="player player--0 player--active">
         <h2 class="name" id="name--0">Player 1</h2>
         <p class="score" id="score--0">43</p>
@@ -25,11 +56,12 @@
           <p class="current-score" id="current--1">0</p>
         </div>
       </section>
-
-      <img src="dice-5.png" alt="Playing dice" class="dice" />
+      <img src="dice-5.png" alt="Playing dice" class="dice hidden" />
       <button class="btn btn--new">🔄 New game</button>
       <button class="btn btn--roll">🎲 Roll dice</button>
       <button class="btn btn--hold">📥 Hold</button>
+
+      <div class="overlay novisibility"></div>
     </main>
     <script src="script.js"></script>
   </body>
