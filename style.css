@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
+:root {
+  --player-one-color: #4a8fe7; /* Blue shade for player one */
+  --player-two-color: #ff7f50; /* Orange shade for player two */
+  --btn-hover-color: #fcbf10; /* Bright yellow for button hover */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -16,10 +22,11 @@ body {
   font-weight: 400;
   height: 100vh;
   color: #333;
-  background-image: linear-gradient(to top left, #8ed1c6 0%, #c6ace7 100%);
+  background-image: linear-gradient(to top left, #8ecae6, #219ebc);
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 /* LAYOUT */
@@ -27,7 +34,7 @@ main {
   position: relative;
   width: 100rem;
   height: 60rem;
-  background-color: rgba(255, 255, 255, 0.35);
+  background-color: #fb8500;
   backdrop-filter: blur(200px);
   filter: blur();
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
@@ -35,16 +42,24 @@ main {
   overflow: hidden;
   display: flex;
 }
+/* .player--0 {
+  /* background-color: var(--player-one-color); */
+/* }
+
+.player--1 {
+  background-color: #ffb703;
+/* } */
 
 .player {
-  flex: 50%;
-  padding: 9rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: all 0.75s;
   background-color: #c7c0ed;
   opacity: 85%;
+  padding: 9rem;
+  display: flex;
+  flex: 50%;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-radius: 15px; /* Rounded corners */
 }
 
 /* ELEMENTS */
@@ -60,15 +75,52 @@ main {
 }
 
 .score {
-  font-size: 8rem;
-  font-weight: 300;
-  /* background: -webkit-linear-gradient(50deg, #3c6fcf, #183d81); */
-  margin-bottom: auto;
+  font-size: 9rem;
+  color: #333;
+  font-weight: 700;
 }
 
 .player--active {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.6
+  ); /* Lighter background for active player */
+  border: 3px solid #ffd700; /* Gold border for emphasis */
+  transform: scale(1.05); /* Slightly enlarge active player section */
+  box-shadow: 0 0 10px 5px #ffd700; /* Soft glow effect */
+  transition: transform 0.5s ease, box-shadow 0.5s ease; /* Smooth transition */
 }
+
+.player--active::after {
+  content: '👉'; /* Example: Right arrow emoji */
+  position: absolute;
+  font-size: 3rem;
+  right: 100%; /* Place outside the player box */
+  top: 50%;
+  transform: translateY(-50%);
+  transition: right 0.5s ease; /* Smooth movement of the arrow */
+}
+
+.player--active.player--left::after {
+  content: '👈'; /* Left arrow emoji */
+  left: 100%; /* Place outside the left side of the player box */
+  position: absolute;
+  font-size: 3rem;
+  right: 100%; /* Place outside the player box */
+  top: 50%;
+  transform: translateY(-50%);
+  transition: right 0.5s ease; /* Smooth movement of the arrow */
+}
+
+/* Enhance Text Visibility for Active Player */
+.player--active .name,
+.player--active .score {
+  font-weight: bold;
+  color: #000; /* Darker color for better contrast */
+}
+
 .player--active .name {
   font-weight: 700;
 }
@@ -80,15 +132,24 @@ main {
   opacity: 1;
 }
 
+/* Responsive Design Adjustments for Active Player */
+@media (max-width: 768px) {
+  .player--active {
+    border: 2px solid #ffd700; /* Adjust border size for smaller screens */
+    transform: scale(1.02); /* Less enlargement on small screens */
+  }
+}
+
 .current {
-  background-color: rgba(96, 82, 82, 0.75);
+  background-color: #fafafa;
   opacity: 0.8;
   border-radius: 9px;
-  color: #fff;
+  color: #333;
   width: 65%;
   padding: 2rem;
   text-align: center;
   transition: all 0.75s;
+  font-size: 2.5rem;
 }
 
 .current-label {
@@ -118,7 +179,7 @@ main {
   font-weight: 400;
   transition: all 0.2s;
 
-  background-color: #ffdac1;
+  background-color: #ffeb3b;
   backdrop-filter: blur(10px);
 
   padding: 0.7rem 2.5rem;
@@ -147,7 +208,12 @@ main {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
 }
 
-.btn:focus {
+.btn:hover {
+  background-color: #ffeb3b;
+  /* transform: translateY(-2px); */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+s .btn:focus {
   outline: none;
 }
 
@@ -157,12 +223,14 @@ main {
   top: 16.5rem;
   transform: translateX(-50%);
   height: 10rem;
+  border: 2px solid #fff; /* Border around dice for better visibility */
+
   color: #d3d3d3;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
 }
 
 .player--winner {
-  background-color: #6b8e23;
+  background-color: #023047;
 }
 
 .player--winner .name {
@@ -172,4 +240,96 @@ main {
 
 .hidden {
   display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    width: 90%; /* Adjust for smaller screens */
+  }
+  .player {
+    width: 100%; /* Full width for players */
+  }
+  .btn {
+    padding: 1rem 3rem; /* Bigger buttons for mobile */
+  }
+}
+
+.overlay {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 20%;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  color: white;
+  font-size: 5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.novisibility {
+  visibility: hidden;
+}
+
+/* ul {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ebbf50;
+  height: 50px;
+  font-size: 2.5rem;
+  justify-content: space-between;
+  padding: 0 5rem;
+  list-style: none;
+  align-items: center;
+  font-weight: 600;
+} */
+
+.home-screen {
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: #ffb703;
+  z-index: 100;
+  color: black;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  line-height: 1.5;
+}
+
+.home-screen h2 {
+  margin-bottom: 2rem;
+}
+
+.home-screen button {
+  background-color: #023047;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.home-screen input {
+  width: 20%;
+  height: 25px;
+  border-radius: 5%;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.visible {
+  visibility: visible;
 }
