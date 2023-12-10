@@ -27,34 +27,53 @@ maxWinningScoreBtn.addEventListener('click', function () {
   document.querySelector('.home-screen').classList.add('novisibility');
 });
 
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add('hidden');
+let score,
+  totalScores,
+  currentScore,
+  activePlayer,
+  playing = true;
+const initialize = function () {
+  document.querySelector('.home-screen').classList.remove('novisibility');
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  currentScore = 0;
+  totalScores = [0, 0];
+  activePlayer = 0;
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  currScore0El.textContent = 0;
+  currScore1El.textContent = 0;
+  diceEl.classList.add('hidden');
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+};
 
-const totalScores = [0, 0];
-let activePlayer = 0;
+initialize();
 
-let currentScore = 0;
 btnRoll.addEventListener('click', function () {
-  // Generate a random dice roll\
-  const dice = Math.trunc(Math.random() * 6) + 1;
-  // Display dice
-  diceEl.src = `dice-${dice}.png`;
-  diceEl.classList.remove('hidden');
-  // check for rolled 1: if true, switch to next player
-  if (dice !== 1) {
-    // Add dice to current score
-    currentScore += dice;
-    document.getElementById(`current--${activePlayer}`).textContent =
-      currentScore;
-  } else {
-    // switch to another player
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
+  if (playing) {
+    // Generate a random dice roll\
+    const dice = Math.trunc(Math.random() * 6) + 1;
+    // Display dice
+    diceEl.src = `dice-${dice}.png`;
+    diceEl.classList.remove('hidden');
+    // check for rolled 1: if true, switch to next player
+    if (dice !== 1) {
+      // Add dice to current score
+      currentScore += dice;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
+    } else {
+      // switch to another player
+      document.getElementById(`current--${activePlayer}`).textContent = 0;
 
-    currentScore = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    player0El.classList.toggle('player--active');
-    player1El.classList.toggle('player--active');
+      currentScore = 0;
+      activePlayer = activePlayer === 0 ? 1 : 0;
+      player0El.classList.toggle('player--active');
+      player1El.classList.toggle('player--active');
+    }
   }
 });
 
@@ -66,6 +85,7 @@ btnHold.addEventListener('click', function () {
   );
 
   if (totalScores[activePlayer] >= maximumWinningScore) {
+    playing = false;
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.remove('player--active');
@@ -95,3 +115,5 @@ value.textContent = input.value;
 input.addEventListener('input', event => {
   value.textContent = event.target.value;
 });
+
+btnNew.addEventListener('click', initialize);
